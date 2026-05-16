@@ -1,0 +1,83 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="20dp"
+    android:gravity="center_horizontal"
+    android:background="#FFFFFF">
+
+    <ImageView
+        android:layout_width="280dp"
+        android:layout_height="220dp"
+        android:layout_marginTop="30dp"
+        android:src="@drawable/logo" />
+
+
+
+    <EditText
+        android:id="@+id/etUsername_Signup"
+        android:layout_width="348dp"
+        android:layout_height="56dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/input_bg"
+        android:hint="USERNAME"
+        android:paddingLeft="24dp"
+        android:paddingBottom="8dp"
+        android:gravity="bottom"
+        android:textColorHint="#1D1B20"
+        android:textSize="16sp" />
+
+    <EditText
+        android:id="@+id/etEmail_Signup"
+        android:layout_width="348dp"
+        android:layout_height="56dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/input_bg"
+        android:hint="EMAIL"
+        android:inputType="textEmailAddress"
+        android:paddingLeft="24dp"
+        android:paddingBottom="8dp"
+        android:gravity="bottom"
+        android:textColorHint="#1D1B20"
+        android:textSize="16sp" />
+
+    <EditText
+        android:id="@+id/etPassword_Signup"
+        android:layout_width="348dp"
+        android:layout_height="56dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/input_bg"
+        android:hint="PASSWORD"
+        android:inputType="textPassword"
+        android:paddingLeft="24dp"
+        android:paddingBottom="8dp"
+        android:gravity="bottom"
+        android:textColorHint="#1D1B20"
+        android:textSize="16sp" />
+
+    <EditText
+        android:id="@+id/etConfirmPassword_Signup"
+        android:layout_width="348dp"
+        android:layout_height="56dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/input_bg"
+        android:hint="CONFIRM PASSWORD"
+        android:inputType="textPassword"
+        android:paddingLeft="24dp"
+        android:paddingBottom="8dp"
+        android:gravity="bottom"
+        android:textColorHint="#1D1B20"
+        android:textSize="16sp" />
+
+    <Button
+        android:id="@+id/btnSignup"
+        android:layout_width="218dp"
+        android:layout_height="44dp"
+        android:layout_marginTop="40dp"
+        android:backgroundTint="#7F00FF"
+        android:text="Login"
+        android:textAllCaps="false"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp" />
+
+</LinearLayout>

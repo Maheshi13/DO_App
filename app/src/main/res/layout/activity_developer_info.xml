@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF">
+
+    <TextView
+        android:id="@+id/tvDevTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:text="Developer Info"
+        android:textColor="#7F00FF"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/ivAvatar"
+        android:layout_width="140dp"
+        android:layout_height="140dp"
+        android:layout_below="@id/tvDevTitle"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="35dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/dev_profile_img"
+           />
+
+    <LinearLayout
+        android:id="@+id/infoBox"
+        android:layout_width="341dp"
+        android:layout_height="250dp"
+        android:layout_below="@id/ivAvatar"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="35dp"
+        android:background="@drawable/bg_rounded_grey"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Name: M.K.Maheshi Priyanwada"
+            android:textColor="#000000"
+            android:textSize="18sp"
+             />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Student No: 2023t01893"
+            android:textColor="#000000"
+            android:textSize="18sp"
+             />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Personal Statement: ICT Student"
+            android:textColor="#000000"
+            android:textSize="18sp"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Release Version: 1.0"
+            android:textColor="#000000"
+            android:textSize="18sp"
+             />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btnDevExit"
+        android:layout_width="123dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/infoBox"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="35dp"
+        android:backgroundTint="#7F00FF"
+        android:text="Exit"
+        android:textAllCaps="false"
+        android:textColor="#FFFFFF" />
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigation"
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        android:layout_alignParentBottom="true"
+        android:background="#25AD7FCC"
+        app:elevation="8dp"
+        app:labelVisibilityMode="unlabeled"
+        app:itemIconSize="30dp"
+        app:itemIconTint="@color/nav_item_color"
+        app:menu="@menu/bottom_nav_menu" />
+
+</RelativeLayout>

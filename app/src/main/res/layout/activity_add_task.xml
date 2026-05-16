@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    tools:context=".AddTaskActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/bottomNavigation"
+        android:fillViewport="true">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/btnBack"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_margin="20dp"
+                android:src="@drawable/ic_back"
+                app:tint="#993AFE" />
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="60dp"
+                android:text="Add New Task"
+                android:textColor="#993AFE"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:id="@+id/formContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/title"
+                android:layout_margin="20dp"
+                android:background="@drawable/gray_card_bg"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Task Name"
+                    android:textColor="#000000"
+                    android:textStyle="bold"
+                    />
+
+                <EditText
+                    android:id="@+id/etTaskName"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/white_input_bg"
+                    android:paddingLeft="15dp"
+                    android:inputType="textCapSentences"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:text="Description"
+                    android:textColor="#000000"
+                    android:textStyle="bold"/>
+
+                <EditText
+                    android:id="@+id/etDescription"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/white_input_bg"
+                    android:paddingLeft="15dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:text="Date"
+                    android:textColor="#000000"
+                    android:textStyle="bold"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/etDay"
+                        android:layout_width="60dp"
+                        android:layout_height="45dp"
+                        android:background="@drawable/white_input_bg"
+                        android:gravity="center"
+                        android:hint="DD"
+                        android:inputType="number" />
+
+                    <EditText
+                        android:id="@+id/etMonth"
+                        android:layout_width="60dp"
+                        android:layout_height="45dp"
+                        android:layout_marginLeft="10dp"
+                        android:background="@drawable/white_input_bg"
+                        android:gravity="center"
+                        android:hint="MM"
+                        android:inputType="number" />
+
+                    <EditText
+                        android:id="@+id/etYear"
+                        android:layout_width="85dp"
+                        android:layout_height="45dp"
+                        android:layout_marginLeft="10dp"
+                        android:background="@drawable/white_input_bg"
+                        android:gravity="center"
+                        android:hint="YYYY"
+                        android:inputType="number" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:text="Time"
+                    android:textColor="#000000"
+                    android:textStyle="bold"/>
+
+                <LinearLayout
+                    android:layout_width="160dp"
+                    android:layout_height="45dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/white_input_bg"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="12dp">
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/ic_clock"
+                        app:tint="#8A8383" />
+                    <EditText
+                        android:id="@+id/etTime"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@android:color/transparent"
+                        android:hint="10.30 am"
+                        android:paddingLeft="10dp"
+                        android:textSize="14sp"
+                        android:inputType="textVisiblePassword" />
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/btnCreateTask"
+                    android:layout_width="match_parent"
+                    android:layout_height="55dp"
+                    android:layout_marginTop="40dp"
+                    android:backgroundTint="#7F00FF"
+                    android:text="Create Task"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="18sp" />
+
+            </LinearLayout>
+        </RelativeLayout>
+    </ScrollView>
+
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigation"
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        android:layout_alignParentBottom="true"
+        android:background="#25AD7FCC"
+        app:elevation="8dp"
+        app:labelVisibilityMode="unlabeled"
+        app:itemIconSize="30dp"
+        app:itemIconTint="@color/nav_item_color"
+        app:menu="@menu/bottom_nav_menu" />
+
+
+
+
+</RelativeLayout>

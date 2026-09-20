@@ -51,7 +51,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="Student No: 2023t01893"
+            android:text="Student No: 2023t0xxxx"
             android:textColor="#000000"
             android:textSize="18sp"
              />

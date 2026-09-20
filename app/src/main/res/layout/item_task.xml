@@ -28,7 +28,8 @@
                 android:layout_height="wrap_content"
                 android:textColor="#7F00FF"
                 android:textStyle="bold"
-                android:textSize="13sp" />
+                android:textSize="15sp"
+                android:textAlignment="center"/>
             <TextView
                 android:id="@+id/tvShowTime"
                 android:layout_width="wrap_content"

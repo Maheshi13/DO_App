@@ -1,8 +1,10 @@
 package lk.techict.doapp;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,97 +27,190 @@ public class HomeActivity extends AppCompatActivity {
     DBHelper DB;
     ArrayList<Object> consolidatedList;
     TextView tvDate;
+    ImageView ivProfile;
     FloatingActionButton fab;
     BottomNavigationView bottomNav;
+
+    String loggedInUsername;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        // --- STEP 1: INITIALIZE ALL VIEWS FIRST (Crucial fix) ---
+        // 1. Initialize views
         tvDate = findViewById(R.id.tvDate);
+        ivProfile = findViewById(R.id.ivProfile);
         fab = findViewById(R.id.fabAddTask);
         bottomNav = findViewById(R.id.bottomNavigation);
         recyclerView = findViewById(R.id.rvTasks);
+
         DB = new DBHelper(this);
         consolidatedList = new ArrayList<>();
 
-        // --- STEP 2: SETUP RECYCLERVIEW ---
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        // 2. Get logged-in username
+        SharedPreferences preferences =
+                getSharedPreferences("UserSession", MODE_PRIVATE);
+
+        loggedInUsername = preferences.getString("username", null);
+
+        if (loggedInUsername == null) {
+
+            startActivity(new Intent(this, LoginActivity.class));
+            finish();
+
+            return;
+        }
+
+        // 3. Setup RecyclerView
+        recyclerView.setLayoutManager(
+                new LinearLayoutManager(this)
+        );
+
         adapter = new TaskAdapter(consolidatedList);
         recyclerView.setAdapter(adapter);
 
-        // --- STEP 3: SET THE DATE HEADER ---
-        SimpleDateFormat sdf = new SimpleDateFormat("MMMM dd", Locale.getDefault());
-        String currentDate = "- " + sdf.format(Calendar.getInstance().getTime());
+        // 4. Set today's date
+        SimpleDateFormat sdf =
+                new SimpleDateFormat("MMMM dd", Locale.getDefault());
+
+        String currentDate =
+                "- " + sdf.format(Calendar.getInstance().getTime());
+
         tvDate.setText(currentDate);
 
-        // --- STEP 4: NAVIGATION LOGIC (Only once, after initialization) ---
+        // 5. Profile icon navigation
+        ivProfile.setOnClickListener(v -> {
+
+            Intent intent = new Intent(
+                    HomeActivity.this,
+                    ProfileActivity.class
+            );
+
+            startActivity(intent);
+            overridePendingTransition(0, 0);
+        });
+
+        // 6. Bottom navigation
         bottomNav.setSelectedItemId(R.id.nav_home);
+
         bottomNav.setOnItemSelectedListener(item -> {
+
             int id = item.getItemId();
+
             if (id == R.id.nav_profile) {
-                startActivity(new Intent(this, ProfileActivity.class));
+
+                startActivity(
+                        new Intent(this, ProfileActivity.class)
+                );
+
                 overridePendingTransition(0, 0);
                 finish();
+
                 return true;
+
             } else if (id == R.id.nav_dev) {
-                startActivity(new Intent(this, DeveloperInfoActivity.class));
+
+                startActivity(
+                        new Intent(this, DeveloperInfoActivity.class)
+                );
+
                 overridePendingTransition(0, 0);
                 finish();
+
                 return true;
             }
+
             return id == R.id.nav_home;
         });
 
-        // --- STEP 5: FAB LOGIC ---
+        // 7. Add task button
         fab.setOnClickListener(v -> {
-            startActivity(new Intent(this, AddTaskActivity.class));
+
+            startActivity(
+                    new Intent(HomeActivity.this, AddTaskActivity.class)
+            );
         });
 
-        // --- STEP 6: LOAD DATA ---
+        // 8. Load tasks
         loadTasksFromDatabase();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        loadTasksFromDatabase();
+
+        if (DB != null && loggedInUsername != null) {
+            loadTasksFromDatabase();
+        }
     }
 
     private void loadTasksFromDatabase() {
+
         try {
-            Cursor cursor = DB.getTasks();
+
+            // Get only this user's tasks
+            Cursor cursor = DB.getTasks(loggedInUsername);
+
             consolidatedList.clear();
+
             String lastDate = "";
 
-            SimpleDateFormat sdf = new SimpleDateFormat("MMMM dd", Locale.getDefault());
-            String today = sdf.format(Calendar.getInstance().getTime());
+            SimpleDateFormat sdf =
+                    new SimpleDateFormat("MMMM dd", Locale.getDefault());
 
-            if (cursor != null && cursor.getCount() > 0) {
+            String today =
+                    sdf.format(Calendar.getInstance().getTime());
+
+            if (cursor != null) {
+
                 while (cursor.moveToNext()) {
-                    // Check column indices. If your DBHelper is standard:
-                    // 0=ID, 1=Name, 2=Desc, 3=Date, 4=Time
+
+                    // Returned columns:
+                    // 0 = ID
+                    // 1 = Name
+                    // 2 = Description
+                    // 3 = Date
+                    // 4 = Time
+
                     String taskName = cursor.getString(1);
                     String taskDesc = cursor.getString(2);
                     String taskDate = cursor.getString(3);
                     String taskTime = cursor.getString(4);
 
                     if (!taskDate.equals(lastDate)) {
+
                         if (!taskDate.equals(today)) {
                             consolidatedList.add(taskDate);
                         }
+
                         lastDate = taskDate;
                     }
-                    consolidatedList.add(new TaskModel(taskName, taskDesc, taskDate, taskTime));
+
+                    consolidatedList.add(
+                            new TaskModel(
+                                    taskName,
+                                    taskDesc,
+                                    taskDate,
+                                    taskTime
+                            )
+                    );
                 }
+
                 cursor.close();
             }
+
             adapter.notifyDataSetChanged();
+
         } catch (Exception e) {
+
             e.printStackTrace();
-            Toast.makeText(this, "Error loading tasks", Toast.LENGTH_SHORT).show();
+
+            Toast.makeText(
+                    this,
+                    "Error loading tasks",
+                    Toast.LENGTH_SHORT
+            ).show();
         }
     }
 }

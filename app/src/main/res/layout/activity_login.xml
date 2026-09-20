@@ -24,7 +24,8 @@
         android:paddingBottom="8dp"
         android:gravity="bottom"
         android:textColorHint="#1D1B20"
-        android:textSize="16sp" />
+        android:textSize="16sp"
+        android:textColor="#000000"/>
 
     <EditText
         android:id="@+id/etPassword"
@@ -38,7 +39,8 @@
         android:paddingBottom="8dp"
         android:gravity="bottom"
         android:textColorHint="#1D1B20"
-        android:textSize="16sp" />
+        android:textSize="16sp"
+        android:textColor="#000000"/>
 
     <Button
         android:id="@+id/btnLogin"

@@ -23,9 +23,11 @@ public class DeveloperInfoActivity extends AppCompatActivity {
         // Highlight the current "Info" tab
         bottomNav.setSelectedItemId(R.id.nav_dev);
 
-        // Exit button logic
+        // Exit button logic - Navigate to Home
         btnExit.setOnClickListener(v -> {
-            // Goes back to the previous screen (Home or Profile)
+            Intent intent = new Intent(DeveloperInfoActivity.this, HomeActivity.class);
+            startActivity(intent);
+            overridePendingTransition(0, 0);
             finish();
         });
 

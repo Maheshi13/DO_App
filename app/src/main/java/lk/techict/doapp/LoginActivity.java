@@ -1,7 +1,7 @@
 package lk.techict.doapp;
 
-
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.SpannableString;
@@ -12,72 +12,122 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 public class LoginActivity extends AppCompatActivity {
 
     EditText etUsername, etPassword;
     Button btnLogin;
-    TextView tvSignup; // Declare the TextView here
+    TextView tvSignup;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        // 1. Initialize all views
+        // 1. Initialize views
         etUsername = findViewById(R.id.etUsername);
         etPassword = findViewById(R.id.etPassword);
         btnLogin = findViewById(R.id.btnLogin);
-        tvSignup = findViewById(R.id.tvSignup); // Initialize the Signup text
+        tvSignup = findViewById(R.id.tvSignup);
 
-        // 2. Apply the purple color to the word "Signup"
+        // 2. Style Signup text
         String text = "No Account? Signup";
+
         SpannableString ss = new SpannableString(text);
 
-        // Define the purple color
-        ForegroundColorSpan colorPurple = new ForegroundColorSpan(Color.parseColor("#7F00FF"));
+        ForegroundColorSpan colorPurple =
+                new ForegroundColorSpan(Color.parseColor("#7F00FF"));
 
-        // Color the word "Signup" (starts at index 12, ends at 18)
-        ss.setSpan(colorPurple, 12, 18, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        ss.setSpan(
+                colorPurple,
+                12,
+                18,
+                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+        );
 
-        // Set the styled text to your TextView
         tvSignup.setText(ss);
 
-        // 3. Login Button Logic
+        // 3. Login button logic
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String user = etUsername.getText().toString();
-                String pass = etPassword.getText().toString();
+
+                String user = etUsername.getText().toString().trim();
+                String pass = etPassword.getText().toString().trim();
 
                 DBHelper DB = new DBHelper(LoginActivity.this);
 
-                if(user.equals("") || pass.equals("")) {
-                    Toast.makeText(LoginActivity.this, "Please enter all fields", Toast.LENGTH_SHORT).show();
+                if (user.isEmpty() || pass.isEmpty()) {
+
+                    Toast.makeText(
+                            LoginActivity.this,
+                            "Please enter all fields",
+                            Toast.LENGTH_SHORT
+                    ).show();
+
                 } else {
-                    Boolean checkuserpass = DB.checkUserPassword(user, pass);
-                    if(checkuserpass) {
-                        Toast.makeText(LoginActivity.this, "Sign in successful", Toast.LENGTH_SHORT).show();
-                        // Use LoginActivity.this instead of getApplicationContext() for better stability
-                        Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-                        // Add flags to ensure a clean transition
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+
+                    Boolean checkuserpass =
+                            DB.checkUserPassword(user, pass);
+
+                    if (checkuserpass) {
+
+                        // Save the currently logged-in username
+                        SharedPreferences preferences =
+                                getSharedPreferences(
+                                        "UserSession",
+                                        MODE_PRIVATE
+                                );
+
+                        preferences.edit()
+                                .putString("username", user)
+                                .apply();
+
+                        Toast.makeText(
+                                LoginActivity.this,
+                                "Sign in successful",
+                                Toast.LENGTH_SHORT
+                        ).show();
+
+                        Intent intent = new Intent(
+                                LoginActivity.this,
+                                HomeActivity.class
+                        );
+
+                        intent.addFlags(
+                                Intent.FLAG_ACTIVITY_CLEAR_TOP |
+                                        Intent.FLAG_ACTIVITY_NEW_TASK
+                        );
+
                         startActivity(intent);
                         finish();
+
+                    } else {
+
+                        Toast.makeText(
+                                LoginActivity.this,
+                                "Invalid username or password",
+                                Toast.LENGTH_SHORT
+                        ).show();
                     }
                 }
             }
         });
-        // 4. Signup Text Click Logic
+
+        // 4. Signup navigation
         tvSignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Move from Login to Signup screen
-                Intent intent = new Intent(LoginActivity.this, SignupActivity.class);
+
+                Intent intent = new Intent(
+                        LoginActivity.this,
+                        SignupActivity.class
+                );
+
                 startActivity(intent);
             }
         });
     }
 }
-
